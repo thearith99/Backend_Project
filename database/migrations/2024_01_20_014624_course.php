@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('title')->nullable(); // Make the 'title' attribute nullable
             $table->string('image')->nullable(); 
+            $table->unsignedBigInteger('grade_id');
+            $table->foreign('grade_id')->references('id')->on('grades');
             $table->timestamps();
         });
     }
