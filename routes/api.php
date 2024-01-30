@@ -21,6 +21,7 @@ use App\Http\Controllers\SubCourseController;
 
 Route::post('register', [\App\Http\Controllers\AuthController::class, 'register']);
 Route::post('login', [\App\Http\Controllers\AuthController::class, 'login']);
+Route::get('getAllUser', [AuthController::class, 'getUser']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('user', [\App\Http\Controllers\AuthController::class, 'user']);

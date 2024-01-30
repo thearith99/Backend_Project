@@ -10,110 +10,6 @@ use App\Http\Requests\CourseStoreRequest;
 
 class CourseController extends Controller
 {
-    // public function create(Request $request)
-    // {
-    //     $request->validate([
-    //         'name' => 'required|string|max:255',
-    //         'title' => 'nullable|string|max:255',
-    //         'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-    //     ]);
-
-    //     $imagePath = null;
-
-    //     if ($request->hasFile('image')) {
-    //         $image = $request->file('image');
-    //         $imageName = time() . '.' . $image->getClientOriginalExtension();
-    //         $image->move(public_path('uploads'), $imageName); // Changed 'upload' to 'uploads' and added a slash before $imageName
-    //         $imagePath = 'uploads/' . $imageName; // Added a slash before $imageName
-    //     }
-
-    //     $course = Course::create([
-    //         'name' => $request->input('name'),
-    //         'title' => $request->input('title'),
-    //         'image' => $imagePath,
-    //     ]);
-
-    //     return response()->json(['data' => $course]);
-    // }
-
-    // public function getAllCourses()
-    // {
-    //     $courses = Course::all();
-
-    //     return response()->json(['data' => $courses]);
-    // }
-
-    // public function getOneCourse($id)
-    // {
-    //     $course = Course::find($id);
-
-    //     if (!$course) {
-    //         return response()->json(['error' => 'Course not found']);
-    //     }
-
-    //     return response()->json(['data' => $course]);
-    // }
-
-    // public function update(Request $request, $id)
-    // {
-    //     $request->validate([
-    //         'name' => 'required|string|max:255',
-    //         'title' => 'nullable|string|max:255',
-    //         'image' => 'sometimes|nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-    //     ]);
-
-    //     $course = Course::find($id);
-
-    //     if (!$course) {
-    //         return response()->json(['error' => 'Course not found']);
-    //     }
-
-    //     if ($request->hasFile('image')) {
-    //         // Handle image upload
-    //         $image = $request->file('image');
-    //         $imageName = time() . '.' . $image->getClientOriginalExtension();
-    //         $image->move(public_path('uploads'), $imageName);
-    //         $imagePath = 'uploads/' . $imageName;
-
-    //         // Delete the previous image if it exists
-    //         if ($course->image) {
-    //             $previousImagePath = public_path($course->image);
-    //             if (file_exists($previousImagePath)) {
-    //                 unlink($previousImagePath);
-    //             }
-    //         }
-
-    //         // Update the course with the new image path
-    //         $course->image = $imagePath;
-    //     }
-
-    //     // Update other fields
-    //     $course->name = $request->input('name');
-    //     $course->title = $request->input('title', 'default_title'); // Set a default value in case 'title' is not present in the request
-    //     $course->save();
-
-    //     return response()->json(['data' => $course]);
-    // }
-
-
-
-    // public function delete($id)
-    // {
-    //     $course = Course::find($id);
-
-    //     if (!$course) {
-    //         return response()->json(['error' => 'Course not found']);
-    //     }
-
-    //     $course->delete();
-
-    //     return response()->json(['message' => 'Course deleted successfully']);
-    // }
-
-
-
-
-
     public function getAllCourses()
     {
        // All Course
@@ -122,7 +18,7 @@ class CourseController extends Controller
        // Return Json Response
        return response()->json([
           'Course' => $course
-       ],200);
+       ]);
     }
   
     public function create(CourseStoreRequest $request)
@@ -134,7 +30,8 @@ class CourseController extends Controller
             Course::create([
                 'name' => $request->name,
                 'image' => $imageName,
-                'title' => $request->title
+                'title' => $request->title,
+                'grade_id' => $request->grade_id,
             ]);
       
             // Save Image in Storage folder
@@ -182,7 +79,8 @@ class CourseController extends Controller
             //echo "request : $request->image";
             $course->name = $request->name;
             $course->title = $request->title;
-      
+            $course->grade_id = $request->grade_id;
+            
             if($request->image) {
  
                 // Public storage

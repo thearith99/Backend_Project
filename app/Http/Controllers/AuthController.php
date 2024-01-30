@@ -12,6 +12,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
 {
+    public function getUser(){
+        $getuser = User::all();
+        
+        return response()->json( $getuser );
+    }
     public function register(Request $request)
     {
         return User::create([
@@ -40,7 +45,6 @@ class AuthController extends Controller
             'message' => $token
         ])->withCookie($cookie);
     }
-
     public function user()
     {
         return Auth::user();

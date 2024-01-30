@@ -9,6 +9,10 @@ class Course extends Model
 {
     use HasFactory;
 
-    protected $table = 'courses';
-    protected $guarded = ["id"];  // handle of error
+    protected $fillable = ['name', 'image', 'title', 'grade_id']; // Add 'grade_id' to fillable
+
+    public function grade()
+    {
+        return $this->belongsTo(Grade::class);
+    }
 }

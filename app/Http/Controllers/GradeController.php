@@ -30,13 +30,20 @@ class GradeController extends Controller
     // Get one grade by ID
     public function getOne($id)
     {
+        // $grade = Grade::find($id);
+
+        // if (!$grade) {
+        //     return response()->json(['message' => 'Grade not found']);
+        // }
+
+        // return response()->json($grade);
+
+        //one to many
+
         $grade = Grade::find($id);
-
-        if (!$grade) {
-            return response()->json(['message' => 'Grade not found']);
-        }
-
-        return response()->json($grade);
+        $all_course = $grade->getAllGrade;
+        $grade->Course = $all_course;
+        return response()->json( $grade);
     }
 
     // Update a grade by ID

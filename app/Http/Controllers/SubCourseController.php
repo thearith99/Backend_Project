@@ -29,7 +29,8 @@ class SubCourseController extends Controller
 
             if ($request->hasFile('lesson_file_path')) {
                 $file = $request->file('lesson_file_path');
-                $filePath = 'storage/' . Str::random(32) . "." . $file->getClientOriginalExtension();
+                $originalFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                $filePath = 'storage/' . $originalFileName . "." . $file->getClientOriginalExtension();
                 Storage::disk('public')->put($filePath, file_get_contents($file));
             }
 
@@ -37,12 +38,13 @@ class SubCourseController extends Controller
             Subcourse::create([
                 'name' => $request->name,
                 'lesson_file_path' => $filePath,
+                'course_id' => $request->course_id, // Add this line for course_id
             ]);
 
             return response()->json([
                 'message' => 'Subcourse created successfully.'
             ], 200);
-        } catch (\Exception $e) {
+        } catch (\Exception $e) {   
             return response()->json([
                 'message' => 'Something went wrong!',
             ], 500);
@@ -64,7 +66,8 @@ class SubCourseController extends Controller
 
                 // Upload the new file
                 $file = $request->file('lesson_file_path');
-                $filePath = 'storage/' . Str::random(32) . "." . $file->getClientOriginalExtension();
+                $originalFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                $filePath = 'storage/' . $originalFileName . "." . $file->getClientOriginalExtension();
                 Storage::disk('public')->put($filePath, file_get_contents($file));
 
                 // Update the lesson_file_path in the database
@@ -73,6 +76,7 @@ class SubCourseController extends Controller
 
             // Update other attributes of the Subcourse
             $subcourse->name = $request->name;
+            $subcourse->course_id = $request->course_id; // Add this line for course_id
             // Add other attributes if needed
 
             // Save the changes to the database

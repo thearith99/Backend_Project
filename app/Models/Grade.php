@@ -11,4 +11,9 @@ class Grade extends Model
 
     protected $table = 'grades';
     protected $guarded = ["id"];  // handle of error
+
+    public function getAllGrade(){
+        // one to many
+        return $this->hasMany(Course::class);
+    }
 }

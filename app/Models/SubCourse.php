@@ -12,3 +12,4 @@ class SubCourse extends Model
     protected $table = 'subcourses';
     protected $guarded = ["id"];  // handle of error
 }
+    
